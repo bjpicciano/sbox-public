@@ -63,7 +63,13 @@ internal partial class NetworkSystem
 	{
 		into.Clear();
 
-		if ( Networking.IsHost )
+		if ( Networking.IsHost && filter?.Single is { } single )
+		{
+			// Only the one it names, if it's one of ours.
+			if ( _connections.Contains( single ) )
+				AddRecipient( into, single, minimumState, filter );
+		}
+		else if ( Networking.IsHost )
 		{
 			foreach ( var c in _connections )
 				AddRecipient( into, c, minimumState, filter );

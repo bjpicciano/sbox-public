@@ -185,8 +185,13 @@ internal sealed class ConnectionInfo
 		if ( !NetworkSystem.IsHost )
 			return;
 
-		UpdateStringTable( "ping", ping );
 		Ping = ping;
+
+		// See Sandbox.Networking.SharePings
+		if ( !Sandbox.Networking.SharePings )
+			return;
+
+		UpdateStringTable( "ping", ping );
 	}
 
 	internal void UpdateStringTable()
@@ -199,7 +204,8 @@ internal sealed class ConnectionInfo
 		if ( !NetworkSystem.IsHost )
 			return;
 
-		UpdateStringTable( "ping", Ping );
+		if ( Sandbox.Networking.SharePings )
+			UpdateStringTable( "ping", Ping );
 		UpdateStringTable( "name", Name );
 		UpdateStringTable( "state", State );
 		UpdateStringTable( "steamid", SteamId );

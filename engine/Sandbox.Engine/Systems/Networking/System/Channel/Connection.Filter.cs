@@ -23,6 +23,22 @@ public abstract partial class Connection
 		private Predicate<Connection> Predicate { get; set; }
 		private FilterType Type { get; set; }
 
+		/// <summary>
+		/// The one connection an include filter names, when it names only one: its recipients are found
+		/// without testing every connection against it.
+		/// </summary>
+		internal Connection Single { get; private set; }
+
+		/// <summary>
+		/// Only this connection.
+		/// </summary>
+		internal Filter( Connection single )
+		{
+			Single = single;
+			Predicate = c => c == single;
+			Type = FilterType.Include;
+		}
+
 		public Filter( FilterType type, Predicate<Connection> predicate )
 		{
 			Predicate = predicate;
