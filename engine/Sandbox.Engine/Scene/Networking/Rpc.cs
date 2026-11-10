@@ -223,7 +223,7 @@ public static partial class Rpc
 		if ( Filter.HasValue )
 			throw new InvalidOperationException( "An RPC filter is already active" );
 
-		Filter = new( Connection.Filter.FilterType.Include, c => c == connection );
+		Filter = new Connection.Filter( connection );
 
 		return DisposeAction.Create( () =>
 		{
