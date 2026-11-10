@@ -53,6 +53,15 @@ public static partial class Networking
 	/// </summary>
 	internal const float ConnectionProblemTime = 4f;
 
+	/// <summary>
+	/// Whether the host puts every connection's ping in the connection list. The list goes to every
+	/// connection, so each ping update reaches every player: about one a second per connection, a cost
+	/// that grows with the square of the player count. Off, the host still knows every ping, but
+	/// <see cref="Connection.Ping"/> reads 0 in players' games, their own included.
+	/// </summary>
+	[ConVar( "net_share_pings", ConVarFlags.Protected, Help = "Send every connection's ping to every connection. Off: the host keeps pings to itself, and Connection.Ping reads 0 in players' games." )]
+	internal static bool SharePings { get; set; } = true;
+
 	internal static Dictionary<string, string> ServerData { get; set; } = new();
 
 	/// <summary>
